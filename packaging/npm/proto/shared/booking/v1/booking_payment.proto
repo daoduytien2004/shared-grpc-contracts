@@ -23,14 +23,9 @@ message BookingPaymentInfoResponse {
 }
 
 message BookingPaymentInfo {
-
   int64 booking_id = 1;
-
   string booking_code = 2;
-
   string user_id = 3;
-
   string booking_status = 4;
-
   string total_amount = 5;
 }
