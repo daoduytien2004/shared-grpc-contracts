@@ -18,8 +18,11 @@ message BookingPaymentInfoRequest {
 }
 
 message BookingPaymentInfoResponse {
+  
   bool success = 1;
+
   BookingPaymentInfo booking = 2;
+
 }
 
 message BookingPaymentInfo {
