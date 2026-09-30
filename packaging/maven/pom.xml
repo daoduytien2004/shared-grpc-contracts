@@ -477,7 +477,7 @@
                     </autoPublish>
 
                     <waitUntil>
-                        published
+                        validated
                     </waitUntil>
 
                 </configuration>
