@@ -1,0 +1,20 @@
+{
+  "name": "@lean2708/shared-grpc-contracts",
+  "version": "0.0.0",
+  "description": "Shared gRPC Protocol Buffer contracts",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daoduytien2004/shared-grpc-contracts.git"
+  },
+  "homepage": "https://github.com/daoduytien2004/shared-grpc-contracts#readme",
+  "bugs": {
+    "url": "https://github.com/daoduytien2004/shared-grpc-contracts/issues"
+  },
+  "files": [
+    "proto"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

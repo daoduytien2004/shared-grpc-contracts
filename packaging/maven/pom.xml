@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="
+            http://maven.apache.org/POM/4.0.0
+            https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ===================================================== -->
+    <!-- Maven coordinates -->
+    <!-- ===================================================== -->
+
+    <groupId>io.github.lean2708</groupId>
+    <artifactId>shared-grpc-contracts</artifactId>
+    <version>0.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>Shared gRPC Contracts</name>
+
+    <description>
+        Shared Protocol Buffer definitions and generated Java gRPC contracts.
+    </description>
+
+    <url>
+        https://github.com/daoduytien2004/shared-grpc-contracts
+    </url>
+
+    <!-- ===================================================== -->
+    <!-- Properties -->
+    <!-- ===================================================== -->
+
+    <properties>
+
+        <project.build.sourceEncoding>
+            UTF-8
+        </project.build.sourceEncoding>
+
+        <maven.compiler.source>
+            17
+        </maven.compiler.source>
+
+        <maven.compiler.target>
+            17
+        </maven.compiler.target>
+
+        <protobuf.version>
+            3.25.5
+        </protobuf.version>
+
+        <grpc.version>
+            1.75.0
+        </grpc.version>
+
+    </properties>
+
+    <!-- ===================================================== -->
+    <!-- Maven Central metadata -->
+    <!-- ===================================================== -->
+
+    <licenses>
+
+        <license>
+
+            <name>
+                MIT License
+            </name>
+
+            <url>
+                https://opensource.org/license/mit
+            </url>
+
+            <distribution>
+                repo
+            </distribution>
+
+        </license>
+
+    </licenses>
+
+
+    <developers>
+
+        <developer>
+
+            <id>
+                lean2708
+            </id>
+
+            <name>
+                lean2708
+            </name>
+
+            <url>
+                https://github.com/lean2708
+            </url>
+
+        </developer>
+
+    </developers>
+
+
+    <scm>
+
+        <connection>
+            scm:git:https://github.com/daoduytien2004/shared-grpc-contracts.git
+        </connection>
+
+        <developerConnection>
+            scm:git:ssh://git@github.com/daoduytien2004/shared-grpc-contracts.git
+        </developerConnection>
+
+        <url>
+            https://github.com/daoduytien2004/shared-grpc-contracts
+        </url>
+
+        <tag>
+            HEAD
+        </tag>
+
+    </scm>
+
+    <!-- ===================================================== -->
+    <!-- Dependencies -->
+    <!-- ===================================================== -->
+
+    <dependencies>
+
+        <dependency>
+
+            <groupId>
+                com.google.protobuf
+            </groupId>
+
+            <artifactId>
+                protobuf-java
+            </artifactId>
+
+            <version>
+                ${protobuf.version}
+            </version>
+
+        </dependency>
+
+
+        <dependency>
+
+            <groupId>
+                io.grpc
+            </groupId>
+
+            <artifactId>
+                grpc-protobuf
+            </artifactId>
+
+            <version>
+                ${grpc.version}
+            </version>
+
+        </dependency>
+
+
+        <dependency>
+
+            <groupId>
+                io.grpc
+            </groupId>
+
+            <artifactId>
+                grpc-stub
+            </artifactId>
+
+            <version>
+                ${grpc.version}
+            </version>
+
+        </dependency>
+
+
+        <dependency>
+
+            <groupId>
+                javax.annotation
+            </groupId>
+
+            <artifactId>
+                javax.annotation-api
+            </artifactId>
+
+            <version>
+                1.3.2
+            </version>
+
+        </dependency>
+
+    </dependencies>
+
+    <!-- ===================================================== -->
+    <!-- Build -->
+    <!-- ===================================================== -->
+
+    <build>
+
+        <extensions>
+
+            <extension>
+
+                <groupId>
+                    kr.motd.maven
+                </groupId>
+
+                <artifactId>
+                    os-maven-plugin
+                </artifactId>
+
+                <version>
+                    1.7.1
+                </version>
+
+            </extension>
+
+        </extensions>
+
+
+        <!--
+            Include raw .proto files in the final JAR as well.
+        -->
+
+        <resources>
+
+            <resource>
+
+                <directory>
+                    ${project.basedir}/../../proto
+                </directory>
+
+                <filtering>
+                    false
+                </filtering>
+
+                <includes>
+                    <include>**/*.proto</include>
+                </includes>
+
+            </resource>
+
+        </resources>
+
+
+        <plugins>
+
+            <!-- ================================================= -->
+            <!-- Generate Java protobuf + gRPC classes -->
+            <!-- ================================================= -->
+
+            <plugin>
+
+                <groupId>
+                    org.xolstice.maven.plugins
+                </groupId>
+
+                <artifactId>
+                    protobuf-maven-plugin
+                </artifactId>
+
+                <version>
+                    0.6.1
+                </version>
+
+                <configuration>
+
+                    <protoSourceRoot>
+                        ${project.basedir}/../../proto
+                    </protoSourceRoot>
+
+                    <protocArtifact>
+                        com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}
+                    </protocArtifact>
+
+                    <pluginId>
+                        grpc-java
+                    </pluginId>
+
+                    <pluginArtifact>
+                        io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}
+                    </pluginArtifact>
+
+                </configuration>
+
+                <executions>
+
+                    <execution>
+
+                        <id>
+                            generate-grpc-java
+                        </id>
+
+                        <goals>
+
+                            <goal>
+                                compile
+                            </goal>
+
+                            <goal>
+                                compile-custom
+                            </goal>
+
+                        </goals>
+
+                    </execution>
+
+                </executions>
+
+            </plugin>
+
+
+            <!-- ================================================= -->
+            <!-- Sources JAR -->
+            <!-- ================================================= -->
+
+            <plugin>
+
+                <groupId>
+                    org.apache.maven.plugins
+                </groupId>
+
+                <artifactId>
+                    maven-source-plugin
+                </artifactId>
+
+                <version>
+                    3.3.1
+                </version>
+
+                <executions>
+
+                    <execution>
+
+                        <id>
+                            attach-sources
+                        </id>
+
+                        <phase>
+                            package
+                        </phase>
+
+                        <goals>
+                            <goal>
+                                jar-no-fork
+                            </goal>
+                        </goals>
+
+                    </execution>
+
+                </executions>
+
+            </plugin>
+
+
+            <!-- ================================================= -->
+            <!-- Javadoc -->
+            <!-- ================================================= -->
+
+            <plugin>
+
+                <groupId>
+                    org.apache.maven.plugins
+                </groupId>
+
+                <artifactId>
+                    maven-javadoc-plugin
+                </artifactId>
+
+                <version>
+                    3.11.2
+                </version>
+
+                <executions>
+
+                    <execution>
+
+                        <id>
+                            attach-javadocs
+                        </id>
+
+                        <phase>
+                            package
+                        </phase>
+
+                        <goals>
+                            <goal>
+                                jar
+                            </goal>
+                        </goals>
+
+                    </execution>
+
+                </executions>
+
+            </plugin>
+
+
+            <!-- ================================================= -->
+            <!-- GPG -->
+            <!-- ================================================= -->
+
+            <plugin>
+
+                <groupId>
+                    org.apache.maven.plugins
+                </groupId>
+
+                <artifactId>
+                    maven-gpg-plugin
+                </artifactId>
+
+                <version>
+                    3.2.8
+                </version>
+
+                <executions>
+
+                    <execution>
+
+                        <id>
+                            sign-artifacts
+                        </id>
+
+                        <phase>
+                            verify
+                        </phase>
+
+                        <goals>
+                            <goal>
+                                sign
+                            </goal>
+                        </goals>
+
+                    </execution>
+
+                </executions>
+
+            </plugin>
+
+
+            <!-- ================================================= -->
+            <!-- Maven Central -->
+            <!-- ================================================= -->
+
+            <plugin>
+
+                <groupId>
+                    org.sonatype.central
+                </groupId>
+
+                <artifactId>
+                    central-publishing-maven-plugin
+                </artifactId>
+
+                <version>
+                    0.11.0
+                </version>
+
+                <extensions>
+                    true
+                </extensions>
+
+                <configuration>
+
+                    <publishingServerId>
+                        central
+                    </publishingServerId>
+
+                    <autoPublish>
+                        true
+                    </autoPublish>
+
+                    <waitUntil>
+                        published
+                    </waitUntil>
+
+                </configuration>
+
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+</project>

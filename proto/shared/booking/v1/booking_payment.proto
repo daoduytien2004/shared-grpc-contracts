@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package shared.booking.v1;
+
+option java_multiple_files = true;
+option java_package = "com.shared.grpc.booking.v1";
+option java_outer_classname = "BookingPaymentProto";
+
+service BookingPaymentService {
+
+  rpc GetBookingPaymentInfo(BookingPaymentInfoRequest)
+      returns (BookingPaymentInfoResponse);
+
+}
+
+message BookingPaymentInfoRequest {
+  int64 booking_id = 1;
+}
+
+message BookingPaymentInfoResponse {
+  bool success = 1;
+  BookingPaymentInfo booking = 2;
+}
+
+message BookingPaymentInfo {
+
+  int64 booking_id = 1;
+
+  string booking_code = 2;
+
+  string user_id = 3;
+
+  string booking_status = 4;
+
+  string total_amount = 5;
+}
